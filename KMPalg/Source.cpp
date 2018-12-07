@@ -47,22 +47,67 @@ void createLookUpKmp(string pat) {
 
 }
 
-void stringSearchKmp() {
+int stringSearchKmp(string pat, string txt) {
 
+	createLookUpKmp(pat);
+	int txtPosition = 0;
+	int patPosition = 0;
+
+	while (txtPosition <= txt.length() - 1) {
+	
+		//if the two chars match
+		if (pat[patPosition] == txt[txtPosition]) {
+		
+			//if you've reached the end of the pattern string the return the position of the txt string
+			if (patPosition == pat.length() - 1) {
+			
+				return txtPosition;
+			
+			}
+
+			//if not then continue to the next character
+			txtPosition++;
+			patPosition++;
+
+		}
+
+
+		else {
+		
+			if (patPosition == 0) {
+			
+				txtPosition++;
+			}
+
+			else {
+			
+				patPosition = skipValueKmp[patPosition - 1];
+			
+			}
+		
+		
+		}
+	
+	}
 
 
 
 }
 
 int main() {
-
+	string txt;
 	string pat;
+	cout << "please input text string!";
+	cin >> txt;
+	cout << "please input pattern string";
 	cin >> pat;
+	
+	
+	
 
-	createLookUpKmp(pat);
+	
 
-	for (auto i = skipValueKmp.begin(); i != skipValueKmp.end(); ++i)
-		std::cout << *i << ' ';
+	cout << stringSearchKmp(pat, txt);
 	cin >> pat;
 
 
